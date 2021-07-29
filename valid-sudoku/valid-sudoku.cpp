@@ -1,38 +1,20 @@
 class Solution {
 public:
+    //https://leetcode.com/problems/valid-sudoku/discuss/15616/My-12-lines-CC%2B%2B-solution-with-1-time-traversal-and-9x9x3-memory
     bool isValidSudoku(vector<vector<char>>& board) {
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                char cur = board[i][j];
-                if(board[i][j] == '.'){
-                    continue;
-                }
-                
-                //check row
-                for(int k = j + 1; k < 9; k++){
-                    if(board[i][k] == cur)
+        int rows[9][10] = {0};
+        int cols[9][10] = {0};
+        int blocks[3][3][10] = {0};
+        
+        for(int i = 0; i < board.size(); i++){
+            for(int j = 0; j < board[0].size(); j++){
+                if(board[i][j] != '.'){
+                    int num = board[i][j] - '0';
+                    if(rows[i][num] or cols[j][num] or blocks[i/3][j/3][num])
                         return false;
-                }
-                
-                //check col
-                for(int k = i + 1;k < 9; k++){
-                    if(board[k][j] == cur){
-                        return false;
-                    }
-                }
-                vector<int> rowmapEnd = {3,3,3,6,6,6,9,9,9};
-                vector<int> colmapEnd = {3,3,3,6,6,6,9,9,9};
-                vector<int> rowmapStart = {0,0,0,3,3,3,6,6,6};
-                vector<int> colmapStart = {0,0,0,3,3,3,6,6,6};
-                for(int row = rowmapStart[i]; row < rowmapEnd[i]; row++){
-                    for(int col = colmapStart[j]; col < colmapEnd[j]; col++){
-                        if(row == i and col == j){
-                            continue;
-                        }
-                        if(board[row][col] == cur){
-                            return false;
-                        }
-                    }
+                    rows[i][num] = 1;
+                    cols[j][num] = 1;
+                    blocks[i/3][j/3][num] = 1;
                 }
             }
         }
