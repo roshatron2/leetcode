@@ -1,6 +1,7 @@
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
+        //https://leetcode.com/problems/minimum-path-sum/discuss/23457/C%2B%2B-DP
         vector<vector<int>> dp(grid.size(),vector<int>(grid[0].size(),0));
         dp[0][0] = grid[0][0];
         for(int i = 1; i < grid[0].size(); i++){
