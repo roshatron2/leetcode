@@ -5,11 +5,11 @@ public:
         for(int i = 0; i < k; i++){
             sum += nums[i];
         }
-        double mx = (double)sum / k;
+        int mx = sum;
         for(int i = k; i < nums.size(); i++){
             sum += nums[i] - nums[i - k];
-            mx = max(mx,(double)sum / k);
+            mx = max(mx,sum);
         }
-        return mx;
+        return (double)mx/k;
     }
 };
