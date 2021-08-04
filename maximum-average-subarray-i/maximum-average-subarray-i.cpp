@@ -7,7 +7,6 @@ public:
         }
         double mx = (double)sum / k;
         for(int i = k; i < nums.size(); i++){
-            cout<<sum<<endl;
             sum += nums[i] - nums[i - k];
             mx = max(mx,(double)sum / k);
         }
