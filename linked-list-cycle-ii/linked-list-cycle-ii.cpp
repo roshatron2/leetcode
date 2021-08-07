@@ -9,19 +9,13 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        if(!head or !head->next){
-            return NULL;
-        }              
         ListNode *slow = head,*fast = head;
         while(fast and fast->next){
             fast = fast->next->next;
             slow = slow->next;
-            if(fast == slow){
-                // if(fast != slow)
-                //     return NULL;
-
+            if(slow == fast){
                 slow = head;
-                while(slow != fast){
+                while(fast != slow){
                     slow = slow->next;
                     fast = fast->next;
                 }
