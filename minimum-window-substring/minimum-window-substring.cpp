@@ -1,24 +1,33 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        vector<int> map(128,0);
-        for(auto c: t) map[c]++;
-        int counter=t.size(), begin=0, end=0, d=INT_MAX, head=0;
-        while(end<s.size()){
-            if(counter){
-                map[s[end]]--;
-                if(map[s[end]] >= 0)
-                    counter--;
-                end++;
-            }
-            while(counter==0){ //valid
-                if(end-begin<d)  d=end-(head=begin);
-                map[s[begin]]++;
-                if(map[s[begin]] > 0)
-                    counter++;
-                begin++;
-            }  
+        int l = 0,r = 0,start = 0,len = INT_MAX;
+        unordered_map<char,int> map;
+        for(auto i : t){
+            map[i]++;
         }
-        return d==INT_MAX? "":s.substr(head, d);
+        int counter = t.size();
+        
+        while(r < s.size()){
+            if(counter){
+                map[s[r]]--;
+                if(map[s[r]] >= 0){
+                    counter--;
+                }
+                r++;
+            }
+            while(counter == 0){
+                if(r - l < len){
+                    start = l;
+                    len = r - l;
+                }
+                map[s[l]]++;
+                if(map[s[l]] > 0){
+                    counter++;
+                }
+                l++;
+            }
+        }
+        return len == INT_MAX ? "" : s.substr(start,len);
     }
 };
