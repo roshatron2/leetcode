@@ -12,20 +12,16 @@ class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
         ListNode *i = head;
-        if(!head or !head->next)
-            return head;
         while(i){
-            ListNode *j = i->next;
             ListNode *mn = i;
+            ListNode *j = i->next;
             while(j){
-                if(j->val < mn->val){
-                    mn = j;
-                }
-                j = j->next;
+              if(j->val < mn->val){
+                  mn = j;
+              }  
+              j = j->next;  
             }
-            if(mn){
-                swap(mn->val,i->val);
-            }
+            swap(i->val,mn->val);
             i = i->next;
         }
         return head;
