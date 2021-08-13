@@ -1,13 +1,28 @@
 class Solution {
-public:
+   public:
+    struct greater {
+        bool operator()(const pair<int, pair<int, int>> a, const pair<int, pair<int, int>> b) {
+            return a.first > b.first;
+        }
+    };
     int kthSmallest(vector<vector<int>>& matrix, int k) {
-        vector<int> nums;
-        for(int i = 0; i < matrix.size(); i++){
-            for(int j = 0; j < matrix.size(); j++){
-                nums.push_back(matrix[i][j]);
+        int n = matrix.size();
+        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater> pq;
+        for (int i = 0; i < n; i++) {
+            pq.push(make_pair(matrix[i][0], make_pair(i, 0)));
+        }
+        while (!pq.empty()) {
+            if (--k == 0) {
+                break;
+            }
+            auto top = pq.top();
+            pq.pop();
+            top.second.second++;
+            if (n > top.second.second) {
+                int heaptop = matrix[top.second.first][top.second.second];
+                pq.push(make_pair(heaptop,make_pair(top.second.first,top.second.second)));
             }
         }
-        sort(nums.begin(),nums.end());
-        return nums[k-1];
+        return pq.top().first;
     }
 };
