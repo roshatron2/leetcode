@@ -11,29 +11,19 @@
  */
 class Solution {
 public:
-    vector<vector<int>> paths;
-    void dfs(TreeNode *root,vector<int> path){
-        if(!root)
-            return;
+    int sum = 0;
+    void dfs(TreeNode *root,int cur){
+       if(!root)
+           return;
+        cur = cur * 2 + root->val;
         if(!root->left and !root->right){
-            path.push_back(root->val);
-            paths.push_back(path);
-            return;
-        }
-        path.push_back(root->val);
-        dfs(root->left,path);
-        dfs(root->right,path);
-    }
-    int sumRootToLeaf(TreeNode* root) {
-        dfs(root,{});
-        int sum = 0;
-        for(auto row : paths){
-            int cur = 0;
-            for(auto i : row){
-                cur = cur * 2 + i;
-            }
             sum += cur;
         }
+        dfs(root->left,cur);
+        dfs(root->right,cur);
+    }
+    int sumRootToLeaf(TreeNode* root) {
+        dfs(root,0);
         return sum;
     }
 };
