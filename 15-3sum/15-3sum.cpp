@@ -5,7 +5,7 @@ public:
         vector<vector<int>> res;
         int n = nums.size();
         for (int i = 0; i < n; i++) {
-            if (i > 0 and nums[i] == nums[i - 1]) continue;
+            if (i > 0 and nums[i] == nums[i - 1] or nums[i] > 0) continue;
             int l = i + 1, r = n - 1;
             while (l < r) {
                 int sum = nums[i] + nums[l] + nums[r];
