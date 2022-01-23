@@ -7,12 +7,12 @@ public:
             int mid = (l + r) >> 1;
             if(letters[mid] <= target and mid == letters.size() - 1)
                 return letters[0];
-            if(letters[mid] > target){
+            else if(letters[mid] > target){
                 if(mid == 0 or letters[mid-1] <= target)
                     return letters[mid];
                 else
                     r = mid - 1;
-            } else if(letters[mid] <= target){
+            } else {
                 l = mid + 1;
             }
         }
