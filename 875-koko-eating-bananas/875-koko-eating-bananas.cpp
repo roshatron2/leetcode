@@ -12,13 +12,15 @@ public:
             for(int i = 0; i < piles.size(); i++){
                 time += piles[i] / speed;
                 time += piles[i] % speed > 0;
+                if(time > h){
+                    l = speed + 1;
+                    break;
+                }
             }
             if(time <= h){
                 mn = min(mn,speed);
                 r = speed - 1;
             }
-            else
-                l = speed + 1;
         }
         return mn;
     }
