@@ -1,27 +1,28 @@
 class Solution {
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
-        sort(piles.begin(),piles.end());
-        int mx = piles[piles.size()-1];
-        int ans = mx;
-        int l = 1,r = mx;
-        
+        int mx = 0,mn = INT_MAX;
+        for(int i = 0; i < piles.size(); i++){
+            mx = max(mx,piles[i]);
+        }
+        int l = 1,r = mx,speed;
         while(l <= r){
-            int speed = (l + r) >> 1;
-            cout<<speed<<endl;
-            int t = 0;
-            for(int pile : piles){
-                t += ceil((double) pile / speed);
-                if(t > h){
-                    l = speed + 1;
-                    break;
-                }
+            speed = (l + r) >> 1;
+            int time = 0;
+            for(int i = 0; i < piles.size(); i++){
+                time += piles[i] / speed;
+                time += piles[i] % speed > 0;
             }
-            if(t <= h){
-                ans = min(ans,speed);
+            if(time <= h){
+                mn = min(mn,speed);
                 r = speed - 1;
             }
+            else
+                l = speed + 1;
         }
-        return ans;
+        return mn;
     }
 };
+// l 1 16
+// r 30 22
+// speed 15 23
