@@ -1,14 +1,10 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        unordered_map<int,int> map;
-        for(int i : nums){
-            map[i]++;
+        int res = 0;
+        for(int &i : nums){
+            res = res xor i;
         }
-        for(auto [k,v] : map){
-            if(v == 1)
-                return k;
-        }
-        return 0;
+        return res;
     }
 };
