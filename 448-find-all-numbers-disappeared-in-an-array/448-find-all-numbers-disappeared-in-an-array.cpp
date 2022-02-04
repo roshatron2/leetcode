@@ -2,14 +2,17 @@ class Solution {
 public:
     vector<int> findDisappearedNumbers(vector<int>& nums) {
         vector<int> res;
-        sort(nums.begin(),nums.end());
-        for(int i = 1; i <= nums.size(); i++){
-            if(!binary_search(nums.begin(),nums.end(),i))
-                res.push_back(i);
+        for(int &i : nums){
+            int cur = abs(i);
+            if(nums[cur - 1] > 0){
+                nums[cur - 1] *= -1;
+            }
+        }
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] > 0){
+                res.push_back(i + 1);
+            }
         }
         return res;
     }
 };
-
-// 4 3 2 7 8 2 3 1
-// 1 2 2 3 3 4 7 8
