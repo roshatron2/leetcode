@@ -1,13 +1,11 @@
 class Solution {
 public:
     long long dfs(int n,string &s){
-        if(n == 1){
-            return s[n-1] - 'A' + 1;
-        }
-        return 26 * dfs(n-1,s) + s[n - 1] - 'A' + 1;
+        if(n == 0)
+            return s[n] - '@';
+        return 26 * dfs(n-1,s) + s[n] - '@';
     }
     int titleToNumber(string s) {
-        int n = s.size();
-        return dfs(n,s);
+        return dfs(s.size() - 1,s);
     }
 };
