@@ -1,7 +1,7 @@
 class Solution {
 public:
     string fractionToDecimal(int num, int den) {
-        string ans,fractional;
+        string ans;
         if(num < 0 and den > 0 or num > 0 and den < 0){
             ans += "-";
         }
@@ -16,16 +16,16 @@ public:
         unordered_map<long,int> map;
         while(rem){
             if(map[rem]){
-                fractional.insert(map[rem],"(");
-                fractional += ")";
+                ans.insert(map[rem],"(");
+                ans += ")";
                 break;
             }
-            map[rem] = fractional.size();
+            map[rem] = ans.size();
             rem *= 10;
-            fractional += to_string(rem / den);
+            ans += to_string(rem / den);
             rem = rem % den;
         }
-        return ans + fractional;
+        return ans;
     }
 };
     
