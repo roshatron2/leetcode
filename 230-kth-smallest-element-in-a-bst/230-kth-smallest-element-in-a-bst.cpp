@@ -14,10 +14,11 @@ public:
     int kthSmallest(TreeNode* root, int k) {
         queue<TreeNode*> q;
         q.push(root);
-        vector<int> nums;
+        int ans;
+        priority_queue<int> pq;
         while(!q.empty()){
             TreeNode *cur = q.front();
-            nums.push_back(cur->val);
+            pq.push(cur->val);
             q.pop();
             if(cur->left){
                 q.push(cur->left);
@@ -26,7 +27,12 @@ public:
                 q.push(cur->right);
             }
         }
-        sort(nums.begin(),nums.end());
-        return nums[k-1];
+        int n = pq.size();
+        int i = 0;
+        while(i < n - k){
+            pq.pop();
+            i++;
+        }
+        return pq.top();
     }
 };
