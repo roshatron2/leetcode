@@ -7,13 +7,13 @@ public:
             map[i]++;
             mx = max(mx,i);
         }
-        vector<int> dp(mx + 1,0);
-        dp[0] = 0;
-        dp[1] = map[1];
+        int prev = 0,cur = map[1];
+        int dp = max(prev,cur);
         for(int i = 2; i <= mx; i++){
-            int gain = map[i] * i;
-            dp[i] = max(dp[i - 1],dp[i - 2] + gain);
+            dp = max(cur,prev + map[i] * i);
+            prev = cur;
+            cur = dp;
         }
-        return dp[mx];
+        return dp;
     }
 };
