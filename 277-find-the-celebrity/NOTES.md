@@ -1,0 +1,1 @@
+if A knows B then A is not a celebrity and if B does not know A then A is not a celebrity
