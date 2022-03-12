@@ -1,16 +1,14 @@
 class Solution {
 public:
     int calculate(string s) {
-        s += "+ 0";
-        string cur;
+        s += "+0";
         stack<int> st;
         char curOp = '+';
+        int num = 0;
         for(char i : s){
             if(isdigit(i)){
-               cur += i; 
+               num = (num * 10) + (i - '0');
             } else if(!isdigit(i) and !isspace(i)){
-                int num = stoi(cur);
-                cur = "";
                 if(curOp == '+'){
                     st.push(num);
                 } else if(curOp == '-'){
@@ -25,6 +23,7 @@ public:
                     st.push(top / num);
                 }
                 curOp = i;
+                num = 0;
             }
         }
         int res = 0;
