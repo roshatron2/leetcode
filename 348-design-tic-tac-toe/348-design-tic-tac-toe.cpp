@@ -1,46 +1,30 @@
 class TicTacToe {
 public:
-    vector<vector<int>> board;
+    vector<int> rows,cols;
+    int diagonal = 0,antiDiagonal = 0;
     int n;
     TicTacToe(int n) {
-        board = vector<vector<int>>(n,vector<int>(n,0));
+        rows.assign(n,0);
+        cols.assign(n,0);
         this->n = n;
-    }
-    bool checkRow(int row,int player){
-        for(int i = 0; i < n; i++){
-            if(board[row][i] != player)
-                return false;
-        }
-        return true;
-    }
-    bool checkDiagonal(int player){
-        for(int i = 0; i < n; i++){
-            if(board[i][i] != player)
-                return false;
-        }
-        return true;
-    }
-    bool checkAntiDiagonal(int player){
-        for(int i = 0; i < n; i++){
-            if(board[i][n - i - 1] != player)
-                return false;
-        }
-        return true;
-    }
-    bool checkCol(int col,int player){
-        for(int i = 0; i < n; i++){
-            if(board[i][col] != player){
-                return false;
-            }
-        }
-        return true;
     }
     
     int move(int row, int col, int player) {
-        board[row][col] = player;
-        bool won = checkCol(col,player) or checkRow(row,player) or checkDiagonal(player) or checkAntiDiagonal(player);
-        if(won)
+        int score = player == 1 ? 1 : -1;
+        cols[col] += score;
+        rows[row] += score;
+        if(row == col){
+            diagonal += score;
+        }
+        if(col == n - row - 1){
+            antiDiagonal += score;
+        }
+        if(abs(cols[col]) == n 
+           or abs(rows[row]) == n 
+           or abs(diagonal) == n 
+           or abs(antiDiagonal) == n){
             return player;
+        }
         return 0;
     }
 };
