@@ -7,14 +7,18 @@ public:
         for(char i : s){
             map[i]++;
         }
-        int pos = 0;
-        while(pos < s.size() and map[s[pos]] >= k){
-            pos++;
+        int mid = 0;
+        while(mid < s.size() and map[s[mid]] >= k){
+            mid++;
         }
-        if(pos == s.size())
+        
+        if(mid == s.size())
             return s.size();
-        int left = longestSubstring(s.substr(0,pos),k);
-        int right = longestSubstring(s.substr(pos + 1),k);
+        int midNext = mid + 1;
+        while(midNext < s.size() and map[s[midNext]] < k)
+            midNext++;
+        int left = longestSubstring(s.substr(0,mid),k);
+        int right = longestSubstring(s.substr(midNext),k);
         return max(left,right);
     }
 };
