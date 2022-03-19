@@ -1,27 +1,21 @@
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        queue<pair<int,int>> q;
         for(int i = 0; i < mat.size(); i++){
             for(int j = 0; j < mat[0].size(); j++){
-                if(mat[i][j] == 0){
-                    q.push({i,j});
-                } else {
-                    mat[i][j] = -1;
+                if(mat[i][j] > 0){
+                    int top = i - 1 >= 0 ? mat[i - 1][j] : INT_MAX - 10;
+                    int left = j - 1 >= 0 ? mat[i][j - 1] : INT_MAX - 10;
+                    mat[i][j] = min(top,left) + 1;
                 }
             }
         }
-        vector<vector<int>> dirs = {{0,1},{1,0},{0,-1},{-1,0}};
-        int x,y;
-        while(!q.empty()){
-            pair<int,int> cur = q.front();
-            q.pop();
-            for(auto dir : dirs){
-                x = cur.first + dir[0];
-                y = cur.second + dir[1];    
-                if(x >= 0 and y >= 0 and x < mat.size() and y < mat[0].size() and mat[x][y] == -1){
-                    mat[x][y] = 1 + mat[cur.first][cur.second];
-                    q.push({x,y});
+        for(int i = mat.size() - 1; i >= 0; i--){
+            for(int j = mat[0].size() - 1; j >= 0; j--){
+                if(mat[i][j] > 0){
+                    int bottom = i + 1 < mat.size() ? mat[i + 1][j] : mat[i][j];
+                    int right = j + 1 < mat[0].size() ? mat[i][j + 1] : mat[i][j];
+                    mat[i][j] = min(mat[i][j],min(bottom + 1,right + 1));
                 }
             }
         }
