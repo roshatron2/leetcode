@@ -1,33 +1,26 @@
 class Solution {
 public:
     vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
-        auto cmp = [](pair<int,int> a,pair<int,int> b){
-            if(a.second == b.second)
-                return a.first > b.first;
-            return a.second > b.second;
-        };
-        priority_queue<pair<int,int>,vector<pair<int,int>>,decltype(cmp)> pq(cmp);
+        map<int,vector<int>> map;
         for(int i = 0; i < mat.size(); i++){
-            int ones = 0;
-            for(int j : mat[i]){
-                if(j == 1){
-                    ones++;
+            int l = 0,r = mat[0].size() - 1,pos = r + 1,mid;
+            
+            while(l <= r){
+                mid = l + (r - l) / 2;
+                if(mat[i][mid]){
+                    l = mid + 1;
+                } else {
+                    pos = min(pos,mid);
+                    r = mid - 1;
                 }
             }
-            pair<int,int> cur = make_pair(i,ones);
-            pq.push(cur);
+            map[pos].push_back(i);
         }
         vector<int> res;
-        while(!pq.empty() and k){
-            res.push_back(pq.top().first);
-            pq.pop();
-            k--;
+        for(auto i : map){
+            for(auto j : map[i.first])
+                res.push_back(j);
         }
-        return res;
+        return vector<int>(res.begin(),res.begin() + k);
     }
 };
-/*
-  1
- 2  2
-3 5
-*/
