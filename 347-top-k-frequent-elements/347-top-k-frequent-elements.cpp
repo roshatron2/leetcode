@@ -1,8 +1,3 @@
-struct cmp {
-        bool operator()(pair<int,int> a,pair<int,int> b){
-                    return a.second  < b.second;
-        }
-};
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
@@ -11,17 +6,18 @@ public:
         for(int i : nums){
             map[i]++;
         }
-        priority_queue<pair<int,int>,vector<pair<int,int>>,cmp> pq;
-        for(auto [key,value] : map){
-            pq.push(make_pair(key,value));
+        auto cmp = [](pair<int,int> a,pair<int,int> b){
+            return a.second < b.second;
+        };
+        priority_queue<pair<int,int>,vector<pair<int,int>>,decltype(cmp)> pq(cmp);
+        for(auto [k,v] : map){
+            pq.push({k,v});
         }
-        while(!pq.empty()){
+        while(!pq.empty() and k){
             res.push_back(pq.top().first);
+            k--;
             pq.pop();
         }
-        return vector<int>(res.begin(),res.begin() + k);
+        return res;
     }
 };
-//1 : 3
-//2 : 2
-//3 : 1
