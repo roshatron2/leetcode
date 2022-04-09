@@ -7,15 +7,17 @@ public:
             map[i]++;
         }
         auto cmp = [](pair<int,int> a,pair<int,int> b){
-            return a.second < b.second;
+            return a.second > b.second;
         };
         priority_queue<pair<int,int>,vector<pair<int,int>>,decltype(cmp)> pq(cmp);
-        for(auto [k,v] : map){
-            pq.push({k,v});
+        for(auto [key,value] : map){
+            pq.push({key,value});
+            if(pq.size() > k){
+                pq.pop();
+            }
         }
-        while(!pq.empty() and k){
+        while(!pq.empty()){
             res.push_back(pq.top().first);
-            k--;
             pq.pop();
         }
         return res;
