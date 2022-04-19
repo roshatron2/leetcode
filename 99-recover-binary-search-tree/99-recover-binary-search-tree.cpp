@@ -27,9 +27,23 @@ public:
         root->val = nums[pos++];
         recover(root->right);
     }
+    void sort(vector<int> &arr){
+        int n = nums.size();
+        for (int i = n-1; i > 0; i--)
+        {
+            if (arr[i] < arr[i-1]){
+                int j = i-1;
+                while (j>=0 && arr[i] < arr[j])
+                    j--;
+ 
+                swap(arr[i], arr[j+1]);
+                break;
+            }
+        }
+    } 
     void recoverTree(TreeNode* root) {
         inorder(root);
-        sort(nums.begin(),nums.end());
+        sort(nums);
         recover(root);
     }
 };
