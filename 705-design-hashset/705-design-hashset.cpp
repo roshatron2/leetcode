@@ -10,7 +10,7 @@ public:
        int bucket = hash(key);
        return find(table[bucket].begin(),table[bucket].end(),key);
     }
-    MyHashSet(): prime(769), table(prime) {
+    MyHashSet(): prime(10007), table(prime) {
         
     }
     
