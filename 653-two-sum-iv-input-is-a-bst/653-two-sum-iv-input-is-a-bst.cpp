@@ -12,26 +12,16 @@
 class Solution {
 public:
     unordered_set<int> set;
-    bool found = false;
-    void dfs(TreeNode *root,int k){
-       if(!root)
-           return;
-        dfs(root->left,k);
-        int complement = k - root->val;
-        if(set.find(complement) != set.end()){
-            found = true;
+    bool find(TreeNode *root,int k){
+        if(!root)
+            return false;
+        if(set.find(k - root->val) != set.end()){
+            return true;
         }
         set.insert(root->val);
-        dfs(root->right,k);
+        return find(root->left,k) or find(root->right,k);
     }
     bool findTarget(TreeNode* root, int k) {
-       dfs(root,k);
-       return found;
+       return find(root,k); 
     }
 };
-
-/*
-set - 2 3 4  
-
-
-*/
