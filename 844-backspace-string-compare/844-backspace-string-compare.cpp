@@ -1,30 +1,21 @@
 class Solution {
 public:
-    string process(string s){
-        stack<char> stack;
-        string res;
-        for (char i : s) {
-            if (i == '#') {
-                if (!stack.empty())
-                    stack.pop();
-            } else {
-                stack.push(i);
+    bool backspaceCompare(string s, string t) {
+        int i = s.size() - 1,j = t.size() - 1;
+        int skipS = 0,skipT = 0;
+        while(i >= 0 or j >= 0){
+            while(i >= 0 and (s[i] == '#' or skipS)){
+                s[i--] == '#' ? skipS++ : skipS--;
+            }
+            while(j >= 0 and (t[j] == '#' or skipT)){
+                t[j--] == '#' ? skipT++ : skipT--;
+            }
+            if(i == -1 or j == -1)
+                return i == j;
+            if(s[i--] != t[j--]){
+                return false;
             }
         }
-        while (!stack.empty()) {
-            res += stack.top();
-            stack.pop();
-        }
-        reverse(res.begin(), res.end());
-        return res;
-    }
-    bool backspaceCompare(string s, string t) {
-        string cleanedS, cleanedT;
-        cleanedS = process(s);
-        cleanedT = process(t);
-        if (cleanedS == "" and cleanedT == "") {
-            return true;
-        }
-        return cleanedS == cleanedT;
+        return true;
     }
 };
