@@ -3,35 +3,23 @@ public:
     MyStack() {
         
     }
-    int stackTop;
-    queue<int> q1,q2;
+    deque<int> dq; 
     void push(int x) {
-       q1.push(x);
-       stackTop = x;
+        dq.push_back(x);    
     }
     
     int pop() {
-        int popped;
-        while(q1.size()){
-           popped = q1.front();
-           q2.push(popped);
-           q1.pop();
-        }
-        while(q2.size() > 1){ 
-            stackTop = q2.front();
-            q1.push(stackTop);
-            q2.pop();
-        }
-        q2.pop();
-        return popped; 
+        int popped = dq.back();
+        dq.pop_back();
+        return popped;
     }
     
     int top() {
-       return stackTop; 
+       return dq.back(); 
     }
     
     bool empty() {
-       return q1.empty(); 
+       return dq.empty(); 
     }
 };
 
