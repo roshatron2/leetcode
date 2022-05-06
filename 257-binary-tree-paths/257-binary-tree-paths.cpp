@@ -16,15 +16,17 @@ public:
         if(!root)
            return;
         cur += to_string(root->val) + "->";
-        dfs(root->left,cur);
-        dfs(root->right,cur);
         if(!root->left and !root->right){
             cur.resize(cur.size() - 2);
             res.push_back(cur); 
         }
+        dfs(root->left,cur);
+        dfs(root->right,cur);
     } 
     vector<string> binaryTreePaths(TreeNode* root) {
         dfs(root,"");
         return res;
     }
 };
+// changed the position of second if condition
+
