@@ -2,14 +2,12 @@ class Solution {
 public:
     int triangularSum(vector<int>& nums) {
         int n = nums.size();    
-        vector<vector<int>> mat(n,vector<int>(n,0));
-        mat[0] = nums;
         for(int i = 1; i < n; i++){
             for(int j = 0; j < n - i; j++){
-                mat[i][j] = (mat[i - 1][j] + mat[i - 1][j + 1]) % 10;
+                nums[j] = (nums[j] + nums[j + 1]) % 10;
             }  
         }
-        return mat[n - 1][0];
+        return nums[0];
     }
 };
 /*
