@@ -20,19 +20,17 @@ public:
                 auto [x,y] = q.front(); 
                 q.pop();
                 for(auto dir : dirs){
-                    int nx = x + dir[0];
-                    int ny = y + dir[1];
+                    int nx = x + dir[0],ny = y + dir[1];
                     if(nx < 0 or ny < 0 or nx == m or ny == n){
                         continue;
                     }
-                    if(grid[nx][ny] == 'X' or grid[nx][ny] == '&'){
-                        continue;
+                    if(grid[nx][ny] == 'O'){
+                        q.push({nx,ny});
+                        grid[nx][ny] = '&';
                     }
                     if(grid[nx][ny] == '#'){
                         return steps;
                     }
-                    grid[nx][ny] = '&';
-                    q.push({nx,ny});
                 }
             }
         }
