@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> res;
     void dfs(int n,int k,int start,vector<int> cur){
-       if(n < 0){
+       if(n < 0 or k < 0){
            return;
        } 
        if(k == 0 and n == 0){
