@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dp[51][51] = {0};
+    vector<vector<int>> dp;
     int dfs(int n,int vowels){
         if(dp[n][vowels]){
             return dp[n][vowels];
@@ -14,6 +14,7 @@ public:
         return dp[n][vowels] = dfs(n - 1,vowels) + dfs(n,vowels - 1);
     }
     int countVowelStrings(int n) {
+        dp = vector<vector<int>>(n + 1,vector<int>(6,0));
         return dfs(n,5);        
     }
 };
