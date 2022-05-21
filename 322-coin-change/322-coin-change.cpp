@@ -1,18 +1,28 @@
 class Solution {
 public:
+    vector<int> coins;
+    unordered_map<int,int> map;
+    int dfs(int amount){
+       if(amount < 0){
+           return -1;
+       }
+       if(map[amount])
+           return map[amount];
+       if(amount == 0)
+           return 0;
+       int minCount = INT_MAX;
+       for(int coin : coins){
+          int count = dfs(amount - coin); 
+          if(count == -1)
+              continue;
+          minCount = min(count,minCount);
+       } 
+       map[amount] = minCount == INT_MAX ? -1 : minCount + 1;
+       return map[amount];
+    }
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> dp(amount + 1,INT_MAX);
-        dp[0] = 0;
-        for(int i = 0; i <= amount; i++){
-            for(int coin : coins){
-                if(i >= coin){
-                    if(dp[i - coin] == -1)
-                        continue;
-                    dp[i] = min(dp[i],dp[i - coin] + 1);
-                }
-            }
-            dp[i] = dp[i] == INT_MAX ? -1 : dp[i];
-        }
-        return dp[amount];
+        this->coins = coins;
+        return dfs(amount);
     }
 };
+        
