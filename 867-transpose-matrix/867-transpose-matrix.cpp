@@ -1,14 +1,12 @@
 class Solution {
 public:
     vector<vector<int>> transpose(vector<vector<int>>& matrix) {
-        vector<vector<int>> res;
-        for(int i = 0; i < matrix[0].size(); i++){
-            vector<int> col;
-            for(int j = 0; j < matrix.size(); j++){
-               col.push_back(matrix[j][i]); 
-            } 
-            res.push_back(col);
-        }    
+        vector<vector<int>> res(matrix[0].size(),vector<int>(matrix.size(),0));
+        for(int i = 0; i < matrix.size(); i++){
+            for(int j = 0; j < matrix[0].size(); j++){
+                res[j][i] = matrix[i][j];
+            }
+        }
         return res;
     }
 };
