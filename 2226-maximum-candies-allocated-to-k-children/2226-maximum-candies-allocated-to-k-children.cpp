@@ -5,7 +5,7 @@ public:
         int l = 1,r = mx;
         int maxCandies = 0;
         while(l <= r){
-            int size = (l + r) >> 1;
+            int size = l + (r - l) / 2;
             long long int piles = 0;
             for(int candy : candies){
                piles += candy / size; 
