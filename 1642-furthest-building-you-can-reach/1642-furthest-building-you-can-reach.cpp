@@ -1,24 +1,38 @@
 class Solution {
 public:
-    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
-        int n = heights.size(),sum = 0;
-        priority_queue<int,vector<int>,greater<int>> heap;
-        
-        int i = 0;
-        while(i < n - 1){
-            int jump = heights[i + 1] - heights[i];            
-            if(jump > 0){
-                heap.push(jump);
-                if(heap.size() > ladders){
-                    sum += heap.top();
-                    heap.pop();
-                }
-            }
-            if(sum > bricks and heap.size() == ladders){
-                break;
-            }
-            i++;
+    bool isReachable(vector<int>& heights,int bricks,int ladders,int pos){
+        vector<int> jumps;
+        for(int j = 0; j < pos; j++){
+                int jump = heights[j + 1] - heights[j];
+                if(jump > 0)
+                    jumps.push_back(jump);
         }
-        return i;
+        sort(jumps.begin(),jumps.end());
+        long long int bricksRemaining = bricks,laddersRemaining = ladders;
+        bool reachable = true;
+        for(int jump : jumps){
+            bricksRemaining -= jump;
+            if(bricksRemaining < 0){
+                laddersRemaining--;
+            }
+            if(laddersRemaining < 0){
+                return false;
+            }
+        }        
+        return true;
+    } 
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+        int n = heights.size();
+        int l = 0,r = n - 1,ans;
+        while(l <= r){
+            int mid = l + (r - l) / 2;
+            if(isReachable(heights,bricks,ladders,mid)){
+                l = mid + 1;
+                ans = mid;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
     }
 };
