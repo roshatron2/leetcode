@@ -1,0 +1,1 @@
+if there are l ladders and b bricks maintain the largest  l jumps and the sum of the remaining jumps so far and if the number of bricks are less than the the remaining sum of jumps and the heap is of size l then stop there.
