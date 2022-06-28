@@ -1,26 +1,34 @@
 class Solution {
 public:
     int minDeletions(string s) {
-        priority_queue<int> max_heap;
-        vector<int> map(26,0);
+        unordered_map<char,int> map;
         for(char i : s){
-            map[i - 'a']++;
+            map[i]++;
         }
-        for(int i : map){
-            if(i){
-                max_heap.push(i);
-            }
+        vector<int> freqs;
+        for(auto [letter,freq] : map){
+            freqs.push_back(freq);
         }
+        sort(freqs.begin(),freqs.end(),greater<int>());
+        int maxAllowedFreq = s.size();
         int deletions = 0;
-        while(max_heap.size() > 1){
-            int top = max_heap.top();
-            max_heap.pop();
-            if(top == max_heap.top()){
-               if(top - 1 > 0)
-                   max_heap.push(top - 1);
-               deletions++;
+        for(int &freq : freqs){
+            if(freq > maxAllowedFreq){
+                deletions += freq - maxAllowedFreq; 
+                freq = maxAllowedFreq;
             }
+            maxAllowedFreq = max(0,freq - 1);
         }
         return deletions;
     }
 };
+/*
+aaabbbcc
+a:3
+b:3
+c:2
+
+bbcebab
+b:4 c:1 e:0 a:1
+-1
+*/
