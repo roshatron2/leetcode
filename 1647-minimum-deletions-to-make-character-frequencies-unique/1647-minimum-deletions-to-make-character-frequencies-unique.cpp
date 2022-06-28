@@ -1,33 +1,26 @@
 class Solution {
 public:
     int minDeletions(string s) {
-        unordered_set<int> seen;
-        unordered_map<char,int> map;
-        int deletions = 0;
+        priority_queue<int> max_heap;
+        vector<int> map(26,0);
         for(char i : s){
-           map[i]++; 
-        } 
-        for(auto [letter,freq] : map){
-            if(seen.find(freq) == seen.end()){
-                seen.insert(freq);
-            } else {
-                while(seen.find(freq) != seen.end() and freq != 0){
-                    freq--;
-                    deletions++;
-                }
-                seen.insert(freq);
+            map[i - 'a']++;
+        }
+        for(int i : map){
+            if(i){
+                max_heap.push(i);
+            }
+        }
+        int deletions = 0;
+        while(max_heap.size() > 1){
+            int top = max_heap.top();
+            max_heap.pop();
+            if(top == max_heap.top()){
+               if(top - 1 > 0)
+                   max_heap.push(top - 1);
+               deletions++;
             }
         }
         return deletions;
     }
 };
-
-/*
-aaabbbcc
-a: 3
-b: 3
-c: 2
-seen: [3,2,1]
-del - 2
-TC - O(unique letters in string * highest Frequency)
-*/
