@@ -1,6 +1,6 @@
 class TimeMap {
 public:
-    unordered_map<string,map<int,string,greater<int>>> map;
+    unordered_map<string,map<int,string>> map;
     TimeMap() {
         
     }
@@ -13,12 +13,11 @@ public:
         if(map[key].find(timestamp) != map[key].end()){
             return map[key][timestamp];    
         } 
-        for(auto [t,v] : map[key]){
-           if(t < timestamp){
-               return v;
-           } 
+        auto it = map[key].upper_bound(timestamp);
+        if(it == map[key].begin()){
+            return "";
         }
-        return "";
+        return prev(it)->second;
     }
 };
 
@@ -31,14 +30,15 @@ public:
 /*
 */
 /*
-if timestamp exists return the value for that timestamp
-else return the value which belongs to the lartest t' such that t' < t
 
-timestamps are sorted in descending order 
-
-since the timestamps are sorted in descending order we can use binary serach to find the t' such that t' is less than t in O(logn) time
+1 3 5 9 10
 
 foo -> 
        4 : bar2
        1 : bar
+get(5)       
+mid = 3
+0 1
+1 4
+
 */
