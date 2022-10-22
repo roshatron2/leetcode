@@ -4,8 +4,8 @@ public:
         vector<int> res;
         int sum = 0;
         for(int i : nums){
-           sum += i;
-           res.push_back(sum); 
+            sum += i; 
+            res.push_back(sum);
         }
         return res;
     }
