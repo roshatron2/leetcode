@@ -1,32 +1,30 @@
 class Solution {
 public:
-    bool dfs(vector<vector<int>>& graph, unordered_set<int> visited, int course){
-        if(visited.find(course) != visited.end()){
-            return false;
-        }
-        if(graph[course].empty()){
-            return true;
-        }
-        visited.insert(course);
-        for(int pre : graph[course]){
-            if(!dfs(graph, visited, pre)){
-                return false;
-            };
-        }
-        visited.erase(course);
-        graph[course] = {};
-        return true;
-    }
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> indegrees(numCourses, 0);
         vector<vector<int>> graph(numCourses, vector<int>());
         for(vector<int> pre : prerequisites){
             graph[pre[0]].push_back(pre[1]);
         }
-        unordered_set<int> visited;
-        for(int course = 0; course < graph.size(); course++){
-            if(!dfs(graph, visited, course)){
+        for(vector<int> edges : graph){
+            for(int v : edges){
+                indegrees[v]++;
+            }
+        }
+        for(int i = 0; i < numCourses; i++){
+            int j = 0; 
+            for(; j < numCourses; j++){
+                if(!indegrees[j]){
+                    break;
+                }
+            } 
+            if(j == numCourses){
                 return false;
-            };
+            }
+            indegrees[j]--;
+            for(int nei : graph[j]){
+                indegrees[nei]--;
+            }
         }
         return true;
     }
