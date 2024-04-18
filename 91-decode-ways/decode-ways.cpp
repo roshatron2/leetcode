@@ -1,40 +1,32 @@
 class Solution {
 public:
-    unordered_map<int,int> memo;
-    bool isValid(string s){
-        if(s.empty()){
-            return true;
-        }
-        int num = stoi(s);
-        if(num >= 1 and num <= 26){
-            return true;
-        }
-        return false;
-    }
-    int dfs(int i, string s){
-        if(memo[i]){
-            return memo[i];
-        }
-        if(i == s.size()){
-            return 1;
-        } 
-        if(i >= s.size()){
+    int numDecodings(string s) {
+        int n = s.size();
+        if(s[0] == '0'){
             return 0;
         }
-        string pick_one = s.substr(i, 1);
-        string pick_two = s.substr(i, 2);
-        int count = 0;
-        if(pick_one[0] == '0')
-            return 0;           
-        if(isValid(pick_one))
-            count += dfs(i + 1, s);
-        if(isValid(pick_two))
-            count += dfs(i + 2, s);
-        return memo[i] = count;
-    }
-    int numDecodings(string s) {
-        return dfs(0, s);
+        vector<int> dp(n + 1, 0); 
+        dp[0] = 1;
+        dp[1] = 1;
+
+        for(int i = 2; i <= n; i++){
+            int first = stoi(s.substr(i - 1, 1));
+            int second = stoi(s.substr(i - 2, 2));
+            if(first >= 1 and first <= 9){
+                dp[i] = dp[i - 1];
+            }
+            if(second >= 10 and second <= 26){
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[n];
     }
 };
 /*
+  2 2 6
+0 1 2 3
+1 1 2 3 
+1 0 9
+0 1 2 3
+1 1 2 
 */
